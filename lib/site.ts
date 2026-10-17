@@ -10,32 +10,39 @@ export const site = {
   },
 };
 
-export const projects = [
+export type Project = {
+  title: string;
+  /** One powerful line. */
+  summary: string;
+  tags: string;
+  href: string;
+  /** Thumbnail in /public, 16:9. Without one, the card shows the title instead. */
+  image?: string;
+};
+
+export const projects: Project[] = [
   {
     title: "LegalAdvisor",
-    summary:
-      "A LangChain RAG system for conversational querying of legal documents, with Pinecone vector search and FastAPI microservices for ingestion, indexing and Q&A.",
+    summary: "Ask your legal documents anything and get answers grounded in the source.",
     tags: "langchain, rag, pinecone, fastapi, groq",
     href: "https://github.com/tvnisxq",
+    image: "/projects/legaladvisor.webp",
   },
   {
     title: "LangVid",
-    summary:
-      "Turns uploaded audio and video into summaries, action items and grounded Q&A, using Whisper for transcription and ChromaDB for retrieval.",
+    summary: "Turns any recording into summaries, action items and grounded answers.",
     tags: "langchain, rag, chromadb, whisper",
     href: "https://github.com/tvnisxq",
   },
   {
     title: "ContentAlchemist",
-    summary:
-      "A LangGraph multi-agent workflow where blog, social and newsletter agents share one master content brief, powered by Gemini 2.0.",
+    summary: "One idea in; a blog post, social posts and a newsletter out.",
     tags: "langgraph, multi-agent, gemini, flask",
     href: "https://github.com/tvnisxq",
   },
   {
     title: "Smoking Status Prediction",
-    summary:
-      "An end-to-end ML system that predicts smoker status from health indicators, served through FastAPI with CI/CD tests on GitHub Actions.",
+    summary: "Predicts smoker status from health indicators, served as an API.",
     tags: "xgboost, fastapi, github actions",
     href: "https://github.com/tvnisxq",
   },
