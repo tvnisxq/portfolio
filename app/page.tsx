@@ -91,7 +91,14 @@ export default async function Home() {
                       className="pcard"
                       tabIndex={copy ? -1 : undefined}
                     >
-                      <span className="pcard-index mono">{String((i % projects.length) + 1).padStart(2, "0")}</span>
+                      <span className="pcard-thumb">
+                        {p.image ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={p.image} alt="" loading="lazy" />
+                        ) : (
+                          <span className="pcard-fallback">{p.title}</span>
+                        )}
+                      </span>
                       <span className="pcard-title">{p.title}</span>
                       <span className="pcard-sum">{p.summary}</span>
                       <span className="pcard-tags mono">{p.tags}</span>
