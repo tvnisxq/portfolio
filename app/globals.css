@@ -460,7 +460,7 @@ a:hover > .thumb-wrap img { transform: scale(1.04); }
 
 .photo-sheen {
   position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.25s; mix-blend-mode: overlay;
-  background: linear-gradient(115deg, transparent 15%, rgba(255, 0, 140, 0.65) 32%, rgba(0, 255, 220, 0.65) 48%, rgba(255, 230, 0, 0.55) 64%, transparent 82%);
+  background: linear-gradient(115deg, transparent 18%, rgba(255, 255, 255, 0.55) 38%, rgba(190, 195, 205, 0.4) 50%, rgba(255, 255, 255, 0.55) 62%, transparent 82%);
   background-size: 220% 220%;
   background-position: calc(var(--mx, 50) * 1%) calc(var(--my, 50) * 1%);
 }
