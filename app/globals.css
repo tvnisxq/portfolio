@@ -437,3 +437,6 @@ a:hover > .thumb-wrap img { transform: scale(1.04); }
   .marquee-item[aria-hidden="true"] { display: none; }
   .pcard:hover, .pcard:focus-visible { transform: none; }
 }
+/* ---------- keep content clear of the big background word ---------- */
+/* The word is as tall as clamp(5rem, 18vw, 13rem) and starts 24px from the top of the section. */
+.panel:not(.panel-hero) .panel-inner { padding-top: calc(clamp(5rem, 18vw, 13rem) - 3rem); }
