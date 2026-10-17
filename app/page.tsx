@@ -3,7 +3,7 @@ import { getLatestReels } from "@/lib/instagram";
 import { getPosts, formatDate } from "@/lib/posts";
 import { projects, site } from "@/lib/site";
 import HeroArt from "@/components/HeroArt";
-import CrtTv from "@/components/CrtTv";
+import PhotoCard from "@/components/PhotoCard";
 import Rail from "@/components/Rail";
 
 export const revalidate = 3600;
@@ -55,7 +55,7 @@ export default async function Home() {
         <span className="bgword" aria-hidden="true">about</span>
         <div className="wrap panel-inner">
           <div className="about-grid">
-            <CrtTv />
+            <PhotoCard />
             <div className="about-copy">
               <h2 className="sr-only">about</h2>
               <p>
