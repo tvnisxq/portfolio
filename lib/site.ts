@@ -46,5 +46,6 @@ export const projects: Project[] = [
     summary: "Predicts smoker status from health indicators, served as an API.",
     tags: "xgboost, fastapi, github actions",
     href: "https://github.com/tvnisxq",
+    image: "/projects/smoking-status.webp",
   },
 ];
