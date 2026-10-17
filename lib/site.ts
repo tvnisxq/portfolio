@@ -39,6 +39,7 @@ export const projects: Project[] = [
     summary: "One idea in; a blog post, social posts and a newsletter out.",
     tags: "langgraph, multi-agent, gemini, flask",
     href: "https://github.com/tvnisxq",
+    image: "/projects/contentalchemist.webp",
   },
   {
     title: "Smoking Status Prediction",
