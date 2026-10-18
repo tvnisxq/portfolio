@@ -436,7 +436,6 @@ a:hover > .thumb-wrap img { transform: scale(1.04); }
 
 /* ---------- photo with hover effects ---------- */
 .photo { position: relative; width: min(340px, 80vw); perspective: 900px; margin: 0; }
-.photo-defs { position: absolute; }
 .photo-tilt {
   position: relative; transform-style: preserve-3d;
   transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(1);
@@ -446,18 +445,7 @@ a:hover > .thumb-wrap img { transform: scale(1.04); }
 .photo-frame { position: relative; border-radius: 14px; overflow: hidden; line-height: 0; background: var(--line); }
 .photo-img { display: block; width: 100%; height: auto; }
 
-.photo-ghost {
-  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-  mix-blend-mode: screen; opacity: 0; pointer-events: none; transition: opacity 0.2s;
-}
-.photo-ghost-r { filter: url(#photo-red); }
-.photo-ghost-c { filter: url(#photo-cyan); }
-.photo:hover .photo-ghost { opacity: 0.85; }
-.photo:hover .photo-ghost-r { translate: calc(var(--dx, 0) * -7px - 3px) calc(var(--dy, 0) * -4px); animation: photo-glitch 0.5s steps(1) 1; }
-.photo:hover .photo-ghost-c { translate: calc(var(--dx, 0) * 7px + 3px) calc(var(--dy, 0) * 4px); animation: photo-glitch-b 0.5s steps(1) 1; }
-@keyframes photo-glitch { 0% { translate: -12px 3px; } 20% { translate: 9px -3px; } 40% { translate: -6px 0; } 60% { translate: 8px 2px; } 80% { translate: -4px -1px; } }
-@keyframes photo-glitch-b { 0% { translate: 12px -3px; } 20% { translate: -9px 3px; } 40% { translate: 6px 0; } 60% { translate: -8px -2px; } 80% { translate: 4px 1px; } }
-
+.photo:hover .photo:hover .photo:hover 
 .photo-sheen {
   position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.25s; mix-blend-mode: overlay;
   background: linear-gradient(115deg, transparent 18%, rgba(255, 255, 255, 0.55) 38%, rgba(190, 195, 205, 0.4) 50%, rgba(255, 255, 255, 0.55) 62%, transparent 82%);
@@ -498,6 +486,6 @@ a:hover > .thumb-wrap img { transform: scale(1.04); }
 @media (max-width: 760px) { .photo { margin: 0 auto; } }
 @media (prefers-reduced-motion: reduce) {
   .photo-tilt, .photo:hover .photo-tilt { transform: none; transition: none; }
-  .photo-ghost, .photo-spark { display: none; }
+  .photo-spark { display: none; }
   .photo-sheen { animation: none; }
 }
