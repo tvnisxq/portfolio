@@ -23,5 +23,10 @@
     "url": "https://www.instagram.com/reel/DPzJG8KjZMz/",
     "thumbnail": "/reels/leetcode-twosum-optimal.webp",
     "title": "LeetCode TwoSum Optimal"
+  },
+  {
+    "url": "https://www.instagram.com/reel/DPtpy2Vktfm/",
+    "thumbnail": "/reels/leetcode-twosum-bruteforce.webp",
+    "title": "LeetCode TwoSum BruteForce"
   }
 ]
