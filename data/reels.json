@@ -18,5 +18,10 @@
 	"url": "https://www.instagram.com/reel/DP9Igk1klGy/",
     "thumbnail": "/reels/confusion-matrix-part-1.webp",
     "title": "Confusion Matrix Part 1"	
+  },
+  {
+    "url": "https://www.instagram.com/reel/DPzJG8KjZMz/",
+    "thumbnail": "/reels/leetcode-twosum-optimal.webp",
+    "title": "LeetCode TwoSum Optimal"
   }
 ]
