@@ -74,7 +74,7 @@ Storing a huge file as a single unit is problematic: it needs a large contiguous
 
 ### Diagram 1 — Chunks distributed across chunkservers
 
-![Chunks distributed across three chunkservers, with replicas of the same data chunks spread across servers.](images/gfs-chunk-replication.png)
+![Chunks distributed across three chunkservers, with replicas of the same data chunks spread across servers.](/images/gfs/gfs-chunk-replication.png)
 
 This design provides several benefits:
 
@@ -88,21 +88,21 @@ This design provides several benefits:
 
 ### Diagram 2 — A large file divided into smaller chunks
 
-![A large file split into six smaller chunks.](images/gfs-large-file-chunks.png)
+![A large file split into six smaller chunks.](/images/gfs/gfs-large-file-chunks.png)
 
 ### Diagram 3 — Chunk identifiers
 
-![Example chunk sequence labelled C1 through C5.](images/gfs-chunk-layout.png)
+![Example chunk sequence labelled C1 through C5.](/images/gfs/gfs-chunk-layout.png)
 
 ### Diagram 4 — Replicas across storage locations
 
-![Example of chunk replicas distributed across multiple storage locations.](images/gfs-replica-distribution.png)
+![Example of chunk replicas distributed across multiple storage locations.](/images/gfs/gfs-replica-distribution.png)
 
 The machines that store chunks are called **chunkservers**. For reliability, each chunk is replicated on multiple chunkservers; the default replication factor is three.
 
 ### Diagram 5 — Chunkservers
 
-![Chunkserver layout showing chunk labels and multiple servers.](images/gfs-chunkservers.png)
+![Chunkserver layout showing chunk labels and multiple servers.](/images/gfs/gfs-chunkservers.png)
 
 ## Master Node
 
@@ -120,7 +120,7 @@ The master assigns each chunk a unique, immutable 64-bit chunk handle when the c
 
 ### Diagram 6 — Master and chunkservers
 
-![Master node coordinating metadata for chunkservers that store the data chunks.](images/gfs-master-and-chunkservers.png)
+![Master node coordinating metadata for chunkservers that store the data chunks.](/images/gfs/gfs-master-and-chunkservers.png)
 
 ## Author
 
