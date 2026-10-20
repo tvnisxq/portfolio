@@ -220,6 +220,14 @@ html { scroll-behavior: smooth; }
   padding: 72px 0;
   border-top: 1px solid var(--line);
 }
+
+#blog {
+  align-items: flex-start;
+  padding-top: 120px;
+}
+
+.panel > .wrap { width: 100%; }
+
 .panel > .wrap { width: 100%; }
 .panel-hero { border-top: 0; padding: 0; }
 .panel-inner { position: relative; z-index: 1; }
