@@ -4,7 +4,7 @@
   --muted: #9a9890;
   --faint: #5f5e58;
   --line: #1f1f21;
-  --accent: #2fbf8f;
+  --accent: #BFC3CC;;
   --serif: "Source Serif 4", Charter, Georgia, serif;
   --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
@@ -14,7 +14,7 @@
   --muted: #5c5b55;
   --faint: #9a9890;
   --line: #e6e4dd;
-  --accent: #0c8a62;
+  --accent: #686B75;
 }
 * { box-sizing: border-box; }
 html { color-scheme: dark; }
@@ -496,4 +496,73 @@ a:hover > .thumb-wrap img { transform: scale(1.04); }
   .photo-tilt, .photo:hover .photo-tilt { transform: none; transition: none; }
   .photo-spark { display: none; }
   .photo-sheen { animation: none; }
+}
+
+/* ---------- metallic chrome hover ---------- */
+
+@keyframes chrome-sweep {
+  from {
+    background-position: 100% 50%;
+  }
+  to {
+    background-position: 0% 50%;
+  }
+}
+
+.row-title,
+.pcard-title {
+  transition: color 180ms ease;
+}
+
+.row:hover .row-title,
+.pcard:hover .pcard-title {
+  background-image: linear-gradient(
+    105deg,
+    #8B8F9A 0%,
+    #E6E8EE 22%,
+    #FFFFFF 38%,
+    #9DA2AE 50%,
+    #F7F8FC 64%,
+    #858A96 78%,
+    #E6E8EE 100%
+  );
+  background-size: 250% 100%;
+  background-position: 100% 50%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: chrome-sweep 1s ease forwards;
+}
+
+/* Navigation: clean silver rather than green */
+
+/* Chrome sweep on navigation hover */
+.top .nav a:hover {
+  background-image: linear-gradient(
+    105deg,
+    #858A96 0%,
+    #E6E8EE 22%,
+    #FFFFFF 38%,
+    #9DA2AE 50%,
+    #FFFFFF 64%,
+    #858A96 78%,
+    #E6E8EE 100%
+  );
+  background-size: 250% 100%;
+  background-position: 100% 50%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: chrome-sweep 1s ease forwards;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .row:hover .row-title,
+  .pcard:hover .pcard-title {
+    animation: none;
+    background-position: 50% 50%;
+  }
 }
