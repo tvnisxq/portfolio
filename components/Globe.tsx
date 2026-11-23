@@ -1,108 +1,92 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-// Dotted rotating globe on a canvas. No libraries. Pauses off-screen, static if reduced motion.
+const RINGS = 30;
+const TILT = 0.42;
+const RADIUS = 132;
+const round = (value: number) => Number(value.toFixed(3));
+
 export default function Globe() {
-  const ref = useRef<HTMLCanvasElement>(null);
+  const [angle, setAngle] = useState(0.6);
 
-  useEffect(() => {
-    const canvas = ref.current;
-    const ctx = canvas?.getContext("2d");
-    if (!canvas || !ctx) return;
+  const points = useMemo(() => {
+    const result: {
+      x: number;
+      y: number;
+      opacity: number;
+      radius: number;
+    }[] = [];
 
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const ct = Math.cos(TILT);
+    const st = Math.sin(TILT);
 
-    let color = "#ecebe6";
-    const readColor = () => {
-      color = getComputedStyle(canvas).color || color;
-      if (reduce) draw();
-    };
+    for (let i = 0; i < RINGS; i++) {
+      const lat = -Math.PI / 2 + (Math.PI * (i + 0.5)) / RINGS;
+      const count = Math.max(6, Math.round(2 * RINGS * Math.cos(lat)));
 
-    const pts: [number, number][] = [];
-    const rings = 30;
-    for (let i = 0; i < rings; i++) {
-      const lat = -Math.PI / 2 + (Math.PI * (i + 0.5)) / rings;
-      const n = Math.max(6, Math.round(2 * rings * Math.cos(lat)));
-      for (let j = 0; j < n; j++) pts.push([lat, (2 * Math.PI * j) / n]);
-    }
+      for (let j = 0; j < count; j++) {
+        const lon = (2 * Math.PI * j) / count + angle;
 
-    let w = 0;
-    let h = 0;
-    let dpr = 1;
-    let angle = 0.6;
-    const tilt = 0.42;
-    const ct = Math.cos(tilt);
-    const st = Math.sin(tilt);
-
-    function draw() {
-      if (!ctx || !w || !h) return;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = color;
-      const R = Math.min(w, h) / 2 - 4;
-      const cx = w / 2;
-      const cy = h / 2;
-      for (const [lat, lon] of pts) {
-        const l = lon + angle;
-        const x = Math.cos(lat) * Math.sin(l);
+        const x = Math.cos(lat) * Math.sin(lon);
         const y0 = Math.sin(lat);
-        const z0 = Math.cos(lat) * Math.cos(l);
+        const z0 = Math.cos(lat) * Math.cos(lon);
+
         const y = y0 * ct - z0 * st;
         const z = y0 * st + z0 * ct;
-        ctx.globalAlpha = z >= 0 ? 0.22 + 0.78 * z : 0.07;
-        ctx.beginPath();
-        ctx.arc(cx + x * R, cy - y * R, z >= 0 ? 0.8 + 0.9 * z : 0.6, 0, Math.PI * 2);
-        ctx.fill();
+
+        result.push({
+          x: 150 + x * RADIUS,
+          y: 150 - y * RADIUS,
+          opacity: z >= 0 ? 0.22 + 0.78 * z : 0.07,
+          radius: z >= 0 ? 0.8 + 0.9 * z : 0.6,
+        });
       }
-      ctx.globalAlpha = 1;
     }
 
-    const resize = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      w = canvas.clientWidth;
-      h = canvas.clientHeight;
-      canvas.width = Math.round(w * dpr);
-      canvas.height = Math.round(h * dpr);
-      draw();
-    };
+    return result;
+  }, [angle]);
 
-    let raf = 0;
-    let visible = true;
-    let last = performance.now();
-    const tick = (t: number) => {
-      angle += (t - last) * 0.00018;
-      last = t;
-      draw();
-      raf = visible ? requestAnimationFrame(tick) : 0;
-    };
-    const start = () => {
-      if (reduce || raf) return;
-      last = performance.now();
-      raf = requestAnimationFrame(tick);
-    };
+useEffect(() => {
+  let frame = 0;
+  let lastUpdate = 0;
+  let currentAngle = 0.6;
 
-    readColor();
-    resize();
-    const mo = new MutationObserver(readColor);
-    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
-    const ro = new ResizeObserver(resize);
-    ro.observe(canvas);
-    const io = new IntersectionObserver(([e]) => {
-      visible = e.isIntersecting;
-      if (visible) start();
-    });
-    io.observe(canvas);
-    start();
+  const animate = (time: number) => {
+    if (time - lastUpdate >= 33) {
+      currentAngle += 0.018;
+      setAngle(currentAngle);
+      lastUpdate = time;
+    }
 
-    return () => {
-      visible = false;
-      cancelAnimationFrame(raf);
-      mo.disconnect();
-      ro.disconnect();
-      io.disconnect();
-    };
-  }, []);
+    frame = requestAnimationFrame(animate);
+  };
 
-  return <canvas ref={ref} className="globe" aria-hidden="true" />;
+  frame = requestAnimationFrame(animate);
+
+  return () => {
+    cancelAnimationFrame(frame);
+  };
+}, []);
+  return (
+    <svg
+      className="globe"
+      viewBox="0 0 300 300"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <g className="globe-dots">
+        {points.map((point, index) => (
+          <circle
+            key={index}
+            cx={round(point.x)}
+            cy={round(point.y)}
+            r={round(point.radius)}
+            fill="currentColor"
+            opacity={round(point.opacity)}
+          />
+        ))}
+      </g>
+    </svg>
+  );
 }

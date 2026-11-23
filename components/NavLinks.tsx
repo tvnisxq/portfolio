@@ -2,22 +2,48 @@
 
 import { useEffect, useState } from "react";
 
-const items = ["home", "about", "projects", "socials", "blog"];
+const items = ["home", "about", "projects", "socials", "blog"] as const;
 
 export default function NavLinks() {
-  const [active, setActive] = useState("");
+  const [active, setActive] = useState<string>("");
 
   useEffect(() => {
-    const els = items.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
-    if (!els.length) return;
-    const io = new IntersectionObserver(
+    const sections = items
+      .map((id) => document.getElementById(id))
+      .filter((element): element is HTMLElement => element !== null);
+
+    if (!sections.length || !("IntersectionObserver" in window)) return;
+
+    const observer = new IntersectionObserver(
       (entries) => {
-        for (const e of entries) if (e.isIntersecting) setActive(e.target.id);
+        // Pick the section most visible in the viewport instead of relying
+        // on the order in which IntersectionObserver returns entries.
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible) setActive(visible.target.id);
       },
-      { rootMargin: "-45% 0px -50% 0px" },
+      {
+        rootMargin: "-35% 0px -50% 0px",
+        threshold: [0, 0.15, 0.3, 0.5, 0.75],
+      },
     );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+
+    sections.forEach((section) => observer.observe(section));
+
+    // Keep Home active when the visitor is at the very top.
+    const handleScroll = () => {
+      if (window.scrollY < 80) setActive("home");
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
@@ -27,7 +53,7 @@ export default function NavLinks() {
           key={id}
           href={`/#${id}`}
           className={active === id ? "active" : undefined}
-          aria-current={active === id ? "true" : undefined}
+          aria-current={active === id ? "location" : undefined}
         >
           {id}
         </a>

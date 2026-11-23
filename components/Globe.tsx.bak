@@ -1,0 +1,65 @@
+"use client";
+
+const points = (() => {
+  const result: {
+    x: number;
+    y: number;
+    opacity: number;
+    radius: number;
+  }[] = [];
+
+  const rings = 30;
+  const tilt = 0.42;
+  const ct = Math.cos(tilt);
+  const st = Math.sin(tilt);
+  const angle = 0.6;
+
+  for (let i = 0; i < rings; i++) {
+    const lat = -Math.PI / 2 + (Math.PI * (i + 0.5)) / rings;
+    const count = Math.max(6, Math.round(2 * rings * Math.cos(lat)));
+
+    for (let j = 0; j < count; j++) {
+      const lon = (2 * Math.PI * j) / count + angle;
+
+      const x = Math.cos(lat) * Math.sin(lon);
+      const y0 = Math.sin(lat);
+      const z0 = Math.cos(lat) * Math.cos(lon);
+
+      const y = y0 * ct - z0 * st;
+      const z = y0 * st + z0 * ct;
+
+      result.push({
+        x: 150 + x * 132,
+        y: 150 - y * 132,
+        opacity: z >= 0 ? 0.22 + 0.78 * z : 0.07,
+        radius: z >= 0 ? 0.8 + 0.9 * z : 0.6,
+      });
+    }
+  }
+
+  return result;
+})();
+
+export default function Globe() {
+  return (
+    <svg
+      className="globe"
+      viewBox="0 0 300 300"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <g className="globe-dots">
+        {points.map((point, index) => (
+          <circle
+            key={index}
+            cx={point.x}
+            cy={point.y}
+            r={point.radius}
+            fill="currentColor"
+            opacity={point.opacity}
+          />
+        ))}
+      </g>
+    </svg>
+  );
+}

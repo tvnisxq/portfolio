@@ -566,3 +566,674 @@ a:hover > .thumb-wrap img { transform: scale(1.04); }
     background-position: 50% 50%;
   }
 }
+
+/* =========================================================
+   RESPONSIVE OVERRIDES — preserves the original portfolio
+   These rules intentionally override only responsive behaviour.
+   ========================================================= */
+
+:root {
+  --page-gutter: clamp(16px, 3.5vw, 32px);
+}
+
+/* Prevent children from forcing the document wider than the viewport. */
+html,
+body {
+  max-width: 100%;
+}
+
+body {
+  overflow-x: clip;
+}
+
+.wrap {
+  width: 100%;
+  padding-left: var(--page-gutter);
+  padding-right: var(--page-gutter);
+}
+
+.top-inner,
+.hero-grid,
+.about-grid,
+.yt-grid,
+.yt-row,
+.soc-head,
+.resume-bar {
+  min-width: 0;
+}
+
+.hero-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+  gap: clamp(24px, 4vw, 48px);
+}
+
+.hero-copy,
+.about-copy,
+.yt-feature,
+.yt-row-text,
+.prose {
+  min-width: 0;
+}
+
+.art {
+  width: min(300px, 100%);
+  max-width: 100%;
+}
+
+.art-tilt {
+  width: 100%;
+  height: 100%;
+}
+
+.art-star {
+  width: 58%;
+  max-width: 180px;
+}
+
+.art-star svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.about-grid {
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  gap: clamp(24px, 5vw, 56px);
+}
+
+.photo {
+  width: min(340px, 100%);
+  max-width: 100%;
+}
+
+.photo-frame,
+.photo-img {
+  max-width: 100%;
+}
+
+.facts div {
+  grid-template-columns: minmax(76px, 96px) minmax(0, 1fr);
+  gap: 12px;
+}
+
+.facts dd,
+.pcard-tags,
+.soc-handle,
+.prose p,
+.prose li {
+  overflow-wrap: anywhere;
+}
+
+.prose {
+  width: 100%;
+}
+
+.prose pre,
+.prose table {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prose img,
+.prose video {
+  max-width: 100%;
+  height: auto;
+}
+
+.resume-frame {
+  display: block;
+  max-width: 100%;
+}
+
+/* Repair the original malformed sheen selector without changing its look. */
+.photo-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s;
+  mix-blend-mode: overlay;
+  background: linear-gradient(
+    115deg,
+    transparent 18%,
+    rgba(255, 255, 255, 0.55) 38%,
+    rgba(190, 195, 205, 0.4) 50%,
+    rgba(255, 255, 255, 0.55) 62%,
+    transparent 82%
+  );
+  background-size: 220% 220%;
+  background-position: calc(var(--mx, 50) * 1%) calc(var(--my, 50) * 1%);
+}
+
+/* Tablet and compact laptop */
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .art {
+    width: min(260px, 62vw);
+    justify-self: start;
+    margin-left: 4px;
+  }
+
+  .about-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .photo {
+    width: min(340px, 82vw);
+    margin-inline: auto;
+  }
+
+  .yt-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  /* Hybrid project rail: autoplay on desktop, touch scrolling here. */
+  .marquee {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-left: var(--page-gutter);
+    padding-right: var(--page-gutter);
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .marquee::-webkit-scrollbar {
+    display: none;
+  }
+
+  .marquee-track {
+    width: max-content;
+    padding-left: 2px;
+    animation: none;
+    scroll-snap-type: x mandatory;
+  }
+
+  .marquee-item {
+    width: min(300px, calc(100vw - 2 * var(--page-gutter)));
+    scroll-snap-align: start;
+  }
+
+  /* The duplicated cards exist only to create the desktop loop. */
+  .marquee-item[aria-hidden="true"] {
+    display: none;
+  }
+
+  .pcard:hover,
+  .pcard:focus-visible {
+    transform: none;
+    translate: none;
+    box-shadow: none;
+  }
+
+  .resume-frame {
+    height: 72svh;
+    min-height: 440px;
+  }
+}
+
+/* Tablet portrait and phones */
+@media (max-width: 760px) {
+  .panel {
+    min-height: auto;
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  .panel-hero {
+    min-height: calc(100svh - 64px);
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .hero {
+    padding-top: 64px;
+    padding-bottom: 56px;
+  }
+
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .about-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .facts div {
+    grid-template-columns: minmax(76px, 88px) minmax(0, 1fr);
+  }
+
+  .yt-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .yt-row {
+    grid-template-columns: minmax(100px, 112px) minmax(0, 1fr);
+  }
+
+  .top-inner {
+    gap: 12px;
+  }
+
+  .top .brand-name {
+    display: none;
+  }
+
+  .nav {
+    flex: 1 1 auto;
+    gap: 16px;
+    margin-left: auto;
+    min-width: 0;
+  }
+
+  .theme-toggle {
+    flex: 0 0 36px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 560px) {
+  body {
+    font-size: 1rem;
+  }
+
+  .hero {
+    padding-top: 56px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.65rem, 12vw, 3.6rem);
+    overflow-wrap: anywhere;
+  }
+
+  .hero p {
+    font-size: 1.02rem;
+  }
+
+  .links {
+    gap: 14px 18px;
+    margin-top: 28px;
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 4px;
+  }
+
+  .row-meta {
+    grid-row: 2;
+  }
+
+  .soc-head {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .yt-row {
+    grid-template-columns: minmax(88px, 112px) minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .yt-row-title {
+    font-size: 0.9rem;
+  }
+
+  .reel-item {
+    width: 132px;
+  }
+
+  .pcard {
+    padding: 16px;
+  }
+
+  .pcard-title {
+    font-size: 1.1rem;
+  }
+
+  .article {
+    padding-top: 36px;
+    padding-bottom: 56px;
+  }
+
+  .article h1 {
+    font-size: clamp(1.85rem, 8vw, 2.4rem);
+    overflow-wrap: anywhere;
+  }
+
+  .prose pre {
+    padding: 12px;
+  }
+
+  .resume {
+    padding-top: 24px;
+    padding-bottom: 48px;
+  }
+
+  .resume-bar {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .resume-actions {
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    font-size: 0.7rem;
+  }
+
+  .resume-frame {
+    height: 68svh;
+    min-height: 340px;
+  }
+}
+
+/* Very narrow phones */
+@media (max-width: 360px) {
+  .top-inner {
+    gap: 8px;
+  }
+
+  .nav {
+    gap: 11px;
+  }
+
+  .top .nav a {
+    font-size: 0.68rem;
+  }
+
+  .facts div {
+    grid-template-columns: 70px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .yt-row {
+    grid-template-columns: 84px minmax(0, 1fr);
+    gap: 9px;
+  }
+}
+
+/* Touch devices: don't depend on hover to reveal essential content. */
+@media (hover: none) {
+  .play {
+    opacity: 0.85;
+  }
+
+  .photo-sheen {
+    opacity: 0.35;
+    animation: photo-drift 7s ease-in-out infinite alternate;
+  }
+
+  .photo-glare,
+  .photo-spark {
+    display: none;
+  }
+
+  .pcard:hover .pcard-thumb img,
+  a:hover > .thumb-wrap img {
+    transform: none;
+  }
+}
+
+/* Motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .photo-sheen {
+    animation: none !important;
+  }
+
+  .photo-tilt,
+  .photo:hover .photo-tilt,
+  .art-tilt {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .photo-spark {
+    display: none !important;
+  }
+}
+
+
+/* ---------- mobile background heading alignment ---------- */
+@media (max-width: 760px) {
+  .bgword {
+    left: 0;
+    width: 100%;
+    padding-left: 24px;
+    font-size: clamp(4.5rem, 17vw, 7rem);
+    letter-spacing: -0.045em;
+    overflow: visible;
+    animation: none;
+    translate: 0 0;
+  }
+}
+
+/* FIX: give the canvas a definite containing block */
+.art {
+  position: relative;
+  aspect-ratio: 1 / 1;
+}
+
+.art-tilt {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.art-globe {
+  position: absolute;
+  inset: 4%;
+  width: auto;
+  height: auto;
+}
+
+.art-globe .globe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 1px;
+  min-height: 1px;
+}
+
+
+/* =========================================================
+   FINAL MOBILE FIX — hero positioning + navigation
+   ========================================================= */
+
+@media (max-width: 760px) {
+  /* Stop vertically centering the entire hero inside the screen. */
+  .panel-hero {
+    align-items: flex-start;
+    min-height: calc(100svh - 64px);
+    padding: 0;
+  }
+
+  /* Bring the hero content up and remove excessive vertical spacing. */
+  .panel-hero > .hero {
+    padding-top: 52px;
+    padding-bottom: 32px;
+    width: 100%;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    justify-items: start;
+    gap: 12px;
+  }
+
+  .hero-copy {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .hero h1 {
+    margin-bottom: 24px;
+  }
+
+  .hero p {
+    max-width: 100%;
+  }
+
+  .links {
+    margin-top: 24px;
+    gap: 14px 20px;
+  }
+
+  /* Keep the artwork close to the social links. */
+  .art {
+    width: min(190px, 52vw);
+    aspect-ratio: 1;
+    justify-self: center;
+    margin: 8px auto 0;
+  }
+
+  .art-tilt {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .art-globe {
+    position: absolute;
+    inset: 4%;
+  }
+
+  .art-globe .globe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .art-star {
+    width: 58%;
+    right: -12%;
+    bottom: -8%;
+  }
+
+  /* Fit the complete navigation into the phone header. */
+  .top-inner {
+    gap: 8px;
+  }
+
+  .top .brand {
+    flex: 0 0 auto;
+  }
+
+  .nav {
+    flex: 1 1 0;
+    min-width: 0;
+    overflow-x: auto;
+    gap: clamp(8px, 2.5vw, 12px);
+    margin-left: auto;
+    scrollbar-width: none;
+  }
+
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .top .nav a {
+    flex: 0 0 auto;
+    font-size: clamp(0.64rem, 2.7vw, 0.75rem);
+    letter-spacing: -0.035em;
+  }
+
+  .theme-toggle {
+    flex: 0 0 32px;
+    width: 32px;
+    padding: 4px;
+  }
+}
+
+/* Extra-small phones */
+@media (max-width: 380px) {
+  .top-inner {
+    gap: 5px;
+  }
+
+  .nav {
+    gap: 7px;
+  }
+
+  .top .nav a {
+    font-size: 0.62rem;
+  }
+
+  .theme-toggle {
+    flex-basis: 28px;
+    width: 28px;
+  }
+}
+
+
+/* FIX: force the dotted globe canvas to occupy the artwork */
+.art {
+  position: relative !important;
+  width: min(190px, 52vw) !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1 !important;
+  isolation: isolate;
+}
+
+.art-tilt {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.art-globe {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 0 !important;
+  overflow: visible;
+}
+
+.art-globe canvas.globe {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 1px !important;
+  min-height: 1px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  color: var(--fg) !important;
+}
+
+.art-star {
+  position: absolute;
+  z-index: 1 !important;
+}
+
+
+/* SVG globe rendering */
+.art-globe {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.art-globe .globe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: var(--fg);
+  overflow: visible;
+}
